@@ -69,7 +69,7 @@
       border-bottom: 1px solid var(--line);
     }
     nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
-    .brand { font-family: var(--display); font-weight: 600; font-size: 1.2rem; color: var(--ink); }
+    .brand { font-family: var(--display); font-weight: 600; font-size: 1.2rem; color: var(--ink); white-space: nowrap; }
     .brand:hover { text-decoration: none; }
     .nav-links { display: flex; gap: 22px; font-size: 0.92rem; }
     .nav-links a { color: var(--muted); }
@@ -158,7 +158,7 @@
     }
 
     /* Sections */
-    section { padding-block: 56px; border-top: 1px solid var(--line); }
+    section { padding-block: 56px; border-top: 1px solid var(--line); scroll-margin-top: 60px; }
     .section-head {
       display: flex;
       align-items: baseline;
@@ -174,20 +174,6 @@
       letter-spacing: -0.01em;
       margin: 0;
     }
-
-    /* Filter */
-    .filter { display: flex; gap: 6px; flex-wrap: wrap; }
-    .filter button {
-      font: inherit;
-      font-size: 0.85rem;
-      padding: 5px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: var(--surface);
-      color: var(--muted);
-      cursor: pointer;
-    }
-    .filter button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 
     /* Timeline */
     .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
@@ -246,7 +232,6 @@
     .t-org { color: var(--muted); font-size: 0.95rem; margin: 2px 0 0; }
     .t-body ul { margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 0.95rem; }
     .t-body li { margin: 4px 0; }
-    .t-item[hidden] { display: none; }
     .terms {
       display: grid;
       grid-template-columns: max-content minmax(0, 1fr);
@@ -294,7 +279,8 @@
     }
     @media (max-width: 640px) {
       .wrap { padding-inline: 16px; }
-      .nav-links { gap: 14px; font-size: 0.85rem; }
+      .nav-links { gap: 12px; font-size: 0.82rem; }
+      .brand { font-size: 1.05rem; }
       .nav-links .hide-sm { display: none; }
       .intro { grid-template-columns: 1fr; }
       .headshot { order: -1; justify-self: start; max-width: 180px; }
@@ -319,8 +305,10 @@
     <div class="wrap">
       <a class="brand" href="#top">Shameen Shrestha</a>
       <div class="nav-links">
-        <a href="#journey">Journey</a>
-        <a href="#projects">Projects</a>
+        <a href="#education">Education</a>
+        <a href="#experience">Experience</a>
+        <a class="hide-sm" href="#volunteering">Volunteering</a>
+        <a class="hide-sm" href="#projects">Projects</a>
         <a class="hide-sm" href="#skills">Skills</a>
         <a href="resume.html">Resume</a>
       </div>
@@ -353,30 +341,36 @@
       </figure>
     </div>
 
-    <section id="journey">
+    <section id="education">
       <div class="wrap">
-        <div class="section-head">
-          <h2>Experience &amp; Education</h2>
-          <div class="filter" role="group" aria-label="Filter timeline">
-            <button type="button" data-filter="all" aria-pressed="true">All</button>
-            <button type="button" data-filter="work" aria-pressed="false">Experience</button>
-            <button type="button" data-filter="education" aria-pressed="false">Education</button>
-          </div>
-        </div>
-
+        <div class="section-head"><h2>Education</h2></div>
         <ol class="timeline">
           <li class="t-item reveal" data-kind="education">
             <div class="t-date">2024 – Present</div>
             <div class="t-body">
-              <span class="t-kind">Education</span>
               <h3>PhD in Computer Science</h3>
-              <p class="t-org">New Jersey Institute of Technology · GPA 3.9</p>
+              <p class="t-org">New Jersey Institute of Technology</p>
               <ul>
                 <li>Research on LLM reasoning, adversarial robustness, and neuro-symbolic AI.</li>
               </ul>
             </div>
           </li>
 
+          <li class="t-item reveal" data-kind="education">
+            <div class="t-date">2017 – 2022</div>
+            <div class="t-body">
+              <h3>Bachelor’s in Computer Engineering</h3>
+              <p class="t-org">Kathmandu Engineering College, Tribhuvan University</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="wrap">
+        <div class="section-head"><h2>Experience</h2></div>
+        <ol class="timeline">
           <li class="t-item reveal" data-kind="work">
             <div class="t-date">Fall 2024 – Present</div>
             <div class="t-body">
@@ -398,7 +392,6 @@
           <li class="t-item reveal" data-kind="work">
             <div class="t-date">Apr 2022 – Present</div>
             <div class="t-body">
-              <span class="t-kind">Experience</span>
               <h3>Software Engineer</h3>
               <p class="t-org">LIS Nepal Pvt. Ltd · Lalitpur, Nepal</p>
               <ul>
@@ -411,22 +404,8 @@
           </li>
 
           <li class="t-item reveal" data-kind="work">
-            <div class="t-date">Nov 2021 – Jun 2023</div>
-            <div class="t-body">
-              <span class="t-kind">Volunteer</span>
-              <h3>Member</h3>
-              <p class="t-org">Women in Big Data · Nepal</p>
-              <ul>
-                <li>Ran hands-on workshops on data technologies at colleges.</li>
-                <li>Organized knowledge-sharing sessions and led mentorship programs connecting students with industry experts.</li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="t-item reveal" data-kind="work">
             <div class="t-date">Nov 2021 – Feb 2022</div>
             <div class="t-body">
-              <span class="t-kind">Experience</span>
               <h3>Software Engineer Intern</h3>
               <p class="t-org">LIS Nepal Pvt. Ltd · Lalitpur, Nepal</p>
               <ul>
@@ -436,13 +415,23 @@
               </ul>
             </div>
           </li>
+        </ol>
+      </div>
+    </section>
 
-          <li class="t-item reveal" data-kind="education">
-            <div class="t-date">2017 – 2022</div>
+    <section id="volunteering">
+      <div class="wrap">
+        <div class="section-head"><h2>Volunteering</h2></div>
+        <ol class="timeline">
+          <li class="t-item reveal" data-kind="volunteer">
+            <div class="t-date">Nov 2021 – Jun 2023</div>
             <div class="t-body">
-              <span class="t-kind">Education</span>
-              <h3>Bachelor’s in Computer Engineering</h3>
-              <p class="t-org">Kathmandu Engineering College, Tribhuvan University · 78.03%</p>
+              <h3>Member</h3>
+              <p class="t-org">Women in Big Data · Nepal</p>
+              <ul>
+                <li>Ran hands-on workshops on data technologies at colleges.</li>
+                <li>Organized knowledge-sharing sessions and led mentorship programs connecting students with industry experts.</li>
+              </ul>
             </div>
           </li>
         </ol>
@@ -506,15 +495,6 @@
   </footer>
 
   <script>
-    // Timeline filter
-    const buttons = document.querySelectorAll('.filter button');
-    const items = document.querySelectorAll('.t-item');
-    buttons.forEach(btn => btn.addEventListener('click', () => {
-      const f = btn.dataset.filter;
-      buttons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
-      items.forEach(it => { it.hidden = f !== 'all' && it.dataset.kind !== f; });
-    }));
-
     // Reveal items as they scroll into view; anything already on screen stays visible.
     if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.documentElement.classList.add('js');
