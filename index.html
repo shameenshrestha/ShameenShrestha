@@ -279,9 +279,19 @@
     }
     @media (max-width: 640px) {
       .wrap { padding-inline: 16px; }
-      .nav-links { gap: 12px; font-size: 0.82rem; }
+      nav .wrap { flex-wrap: wrap; height: auto; gap: 4px; padding-block: 10px 8px; }
       .brand { font-size: 1.05rem; }
-      .nav-links .hide-sm { display: none; }
+      .nav-links {
+        width: 100%;
+        gap: 18px;
+        font-size: 0.88rem;
+        overflow-x: auto;
+        scrollbar-width: none;
+        white-space: nowrap;
+        padding-bottom: 2px;
+      }
+      .nav-links::-webkit-scrollbar { display: none; }
+      section { scroll-margin-top: 90px; }
       .intro { grid-template-columns: 1fr; }
       .headshot { order: -1; justify-self: start; max-width: 180px; }
       .headshot-frame .initials { font-size: 3rem; }
@@ -307,9 +317,9 @@
       <div class="nav-links">
         <a href="#education">Education</a>
         <a href="#experience">Experience</a>
-        <a class="hide-sm" href="#volunteering">Volunteering</a>
-        <a class="hide-sm" href="#projects">Projects</a>
-        <a class="hide-sm" href="#skills">Skills</a>
+        <a href="#volunteering">Volunteering</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
         <a href="resume.html">Resume</a>
       </div>
     </div>
