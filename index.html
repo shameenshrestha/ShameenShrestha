@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shameen Shrestha — Resume</title>
+  <meta name="description" content="Resume of Shameen Shrestha, PhD student in Computer Science at NJIT working on LLM reasoning, adversarial robustness, and neuro-symbolic AI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f5f2;
+      --paper: #ffffff;
+      --ink: #1c1d21;
+      --muted: #5d6068;
+      --rule: #e3e1dc;
+      --accent: #1f5f8b;
+      --chip: #eef3f7;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #121316;
+        --paper: #1a1c20;
+        --ink: #e9e9ec;
+        --muted: #a2a5ad;
+        --rule: #2c2f35;
+        --accent: #7fb7de;
+        --chip: #232830;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #121316;
+      --paper: #1a1c20;
+      --ink: #e9e9ec;
+      --muted: #a2a5ad;
+      --rule: #2c2f35;
+      --accent: #7fb7de;
+      --chip: #232830;
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 15px/1.6 "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .page {
+      max-width: 860px;
+      margin: 40px auto;
+      padding: 56px 64px;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+    }
+
+    header { border-bottom: 2px solid var(--ink); padding-bottom: 20px; margin-bottom: 8px; }
+    h1 {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: 2.4rem;
+      line-height: 1.1;
+      margin: 0 0 6px;
+      letter-spacing: -0.01em;
+    }
+    .tagline { color: var(--muted); margin: 0 0 12px; font-size: 1rem; }
+    .contact { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.92rem; }
+
+    section { margin-top: 28px; }
+    h2 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .entry { margin-bottom: 18px; }
+    .entry:last-child { margin-bottom: 0; }
+    .entry-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 4px 16px;
+      flex-wrap: wrap;
+    }
+    h3 { font-size: 1rem; font-weight: 600; margin: 0; }
+    .date { color: var(--muted); font-size: 0.88rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .sub { color: var(--muted); font-size: 0.92rem; margin: 1px 0 6px; }
+    .tags { font-size: 0.82rem; color: var(--muted); font-style: italic; margin: 1px 0 6px; }
+
+    ul { margin: 6px 0 0; padding-left: 18px; }
+    li { margin: 3px 0; }
+    li::marker { color: var(--muted); }
+
+    .skills { display: grid; grid-template-columns: 210px 1fr; gap: 8px 16px; margin: 0; }
+    .skills dt { font-weight: 600; font-size: 0.92rem; }
+    .skills dd { margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      background: var(--chip);
+      border-radius: 4px;
+      padding: 1px 8px;
+      font-size: 0.84rem;
+      white-space: nowrap;
+    }
+
+    .actions { max-width: 860px; margin: 24px auto -24px; padding: 0 16px; display: flex; justify-content: flex-end; }
+    .btn {
+      font: inherit;
+      font-size: 0.88rem;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 6px 14px;
+      cursor: pointer;
+    }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    @media (max-width: 720px) {
+      .page { margin: 16px; padding: 28px 20px; }
+      .actions { margin: 16px auto -8px; }
+      h1 { font-size: 1.9rem; }
+      .skills { grid-template-columns: 1fr; gap: 4px; }
+      .skills dd { margin-bottom: 10px; }
+    }
+
+    @media print {
+      @page { size: letter; margin: 0.5in; }
+      :root { --bg: #fff; --paper: #fff; --ink: #000; --muted: #444; --rule: #ccc; --accent: #1f5f8b; --chip: #f1f1f1; }
+      body { font-size: 10.5pt; }
+      .actions { display: none; }
+      .page { margin: 0; padding: 0; border: 0; max-width: none; }
+      section { margin-top: 16px; }
+      .entry { break-inside: avoid; margin-bottom: 12px; }
+      a { color: inherit; }
+    }
+  </style>
+</head>
+<body>
+  <div class="actions">
+    <button class="btn" type="button" onclick="window.print()">Download PDF</button>
+  </div>
+
+  <main class="page">
+    <header>
+      <h1>Shameen Shrestha</h1>
+      <p class="tagline">PhD Student in Computer Science · LLM Reasoning · Adversarial Robustness · Neuro-Symbolic AI</p>
+      <div class="contact">
+        <a href="mailto:ss5375@njit.edu">ss5375@njit.edu</a>
+        <a href="https://www.linkedin.com/in/shameen-shrestha-0890a416a/">LinkedIn</a>
+        <a href="https://github.com/shameenshrestha">GitHub</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>Education</h2>
+      <div class="entry">
+        <div class="entry-head">
+          <h3>PhD in Computer Science</h3>
+          <span class="date">2024 – Present</span>
+        </div>
+        <p class="sub">New Jersey Institute of Technology · GPA: 3.9</p>
+      </div>
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Bachelor’s Degree in Computer Engineering</h3>
+          <span class="date">2017 – 2022</span>
+        </div>
+        <p class="sub">Kathmandu Engineering College, Tribhuvan University · 78.03%</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Work Experience</h2>
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Software Engineer</h3>
+          <span class="date">Apr 2022 – Present</span>
+        </div>
+        <p class="sub">LIS Nepal Pvt. Ltd · Lalitpur, Nepal</p>
+        <ul>
+          <li>Designed and implemented interactive dashboards and reports in Tableau and Power BI, using DAX logic to enhance data analysis and visualization.</li>
+          <li>Analyzed retail sales data to identify anomalies and built a web application on the Dataiku platform to visualize and explore them.</li>
+          <li>Developed extraction, daily-load, and history-conversion scripts in Python, moving data from staging to target tables in Snowflake, DataMart, and Looker.</li>
+          <li>Conducted unit testing and end-to-end validation across source and target systems using Looker and MicroStrategy to ensure data accuracy.</li>
+        </ul>
+      </div>
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Software Engineer Intern</h3>
+          <span class="date">Nov 2021 – Feb 2022</span>
+        </div>
+        <p class="sub">LIS Nepal Pvt. Ltd · Lalitpur, Nepal</p>
+        <ul>
+          <li>Trained in ETL processes, data warehousing concepts, and data visualization tooling.</li>
+          <li>Wrote and optimized SQL queries, developed Snowflake stored procedures, and designed a dynamic materialized view for reporting.</li>
+          <li>Migrated reports and dashboards from Tableau to Power BI, validating each against its Tableau counterpart for accuracy and consistency.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Projects</h2>
+      <div class="entry">
+        <h3>Neuro-Symbolic Reasoning with Symbolic Working Memory</h3>
+        <p class="tags">LLMs · Logic · Neuro-Symbolic AI</p>
+        <ul>
+          <li>Implemented a Symbolic Working Memory (SWM) framework that augments LLMs with explicit fact and rule tracking.</li>
+          <li>Extended SWM to propositional and first-order logic, supporting variable binding, quantifiers, negation, and multi-step inference.</li>
+          <li>Evaluated on ProofWriter and PrOntoQA, showing improved reasoning stability under rule shuffling and noisy premises.</li>
+          <li>Analyzed failure modes including negation collapse, semantic drift, and depth-related degradation.</li>
+        </ul>
+      </div>
+      <div class="entry">
+        <h3>Adversarial Attacks on LLM-Based Text Summarization</h3>
+        <p class="tags">LLMs · Hugging Face · NLP Robustness</p>
+        <ul>
+          <li>Evaluated the robustness of T5, BART, PEGASUS, and DistilBART summarizers on CNN/DailyMail.</li>
+          <li>Designed character-, word-, and sentence-level adversarial perturbations to expose summarization failure modes.</li>
+          <li>Quantified robustness with Attack Success Rate, ROUGE degradation, and SBERT semantic similarity.</li>
+          <li>Performed cross-model transferability analysis of attacks across architectures.</li>
+        </ul>
+      </div>
+      <div class="entry">
+        <h3>Adversarial Vulnerability in Low-ID vs High-ID Regions</h3>
+        <p class="tags">CNNs · Adversarial ML · Robustness Analysis</p>
+        <ul>
+          <li>Studied adversarial susceptibility across low- vs high-Local Intrinsic Dimensionality (LID) regions.</li>
+          <li>Implemented FGSM, PGD, and DeepFool attacks on standard and adversarially trained CNNs (MNIST).</li>
+          <li>Showed high-LID regions have sharper loss surfaces and higher attack success rates; low-LID regions are more stable.</li>
+          <li>Visualized loss landscapes to connect intrinsic geometry with adversarial robustness.</li>
+        </ul>
+      </div>
+      <div class="entry">
+        <h3>Sign Language Detection — Real-Time Computer Vision</h3>
+        <p class="tags">Deep Learning · Computer Vision</p>
+        <ul>
+          <li>Built a real-time sign language recognition system with PyTorch CNNs and live OpenCV video processing.</li>
+          <li>Implemented end-to-end inference from camera input to gesture classification, focusing on latency and robustness to visual variation.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Technical Skills</h2>
+      <dl class="skills">
+        <dt>Languages</dt>
+        <dd><span class="chip">Python</span><span class="chip">R</span><span class="chip">C</span><span class="chip">C++</span><span class="chip">Java</span></dd>
+        <dt>ML &amp; Deep Learning</dt>
+        <dd><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">Scikit-Learn</span><span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">OpenCV</span><span class="chip">CNNs</span><span class="chip">Transfer Learning</span><span class="chip">Statistical Modeling</span></dd>
+        <dt>Generative AI &amp; LLMs</dt>
+        <dd><span class="chip">Hugging Face Transformers</span><span class="chip">Text Summarization</span><span class="chip">Embeddings</span><span class="chip">Model Evaluation</span></dd>
+        <dt>Adversarial &amp; Robust ML</dt>
+        <dd><span class="chip">FGSM</span><span class="chip">PGD</span><span class="chip">DeepFool</span><span class="chip">Adversarial Training</span><span class="chip">LID</span></dd>
+        <dt>Neuro-Symbolic Reasoning</dt>
+        <dd><span class="chip">Symbolic Working Memory</span><span class="chip">Propositional &amp; FOL</span><span class="chip">ProofWriter</span><span class="chip">PrOntoQA</span></dd>
+        <dt>Data &amp; Visualization</dt>
+        <dd><span class="chip">Snowflake</span><span class="chip">PostgreSQL</span><span class="chip">ETL Pipelines</span><span class="chip">Power BI</span><span class="chip">Tableau</span><span class="chip">Looker</span><span class="chip">Matplotlib</span></dd>
+        <dt>Version Control</dt>
+        <dd><span class="chip">Git</span><span class="chip">Bitbucket</span></dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Volunteer Experience</h2>
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Member</h3>
+          <span class="date">Nov 2021 – Jun 2023</span>
+        </div>
+        <p class="sub">Women in Big Data · Nepal</p>
+        <ul>
+          <li>Facilitated hands-on workshops on data and emerging data technologies at colleges.</li>
+          <li>Organized knowledge-sharing sessions within and beyond the organization on a range of data topics.</li>
+          <li>Led mentorship programs connecting students with industry experts to bridge academia and industry.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
