@@ -279,7 +279,8 @@
     /* Contact */
     #contact { background: var(--accent-soft); padding-block: 56px 72px; }
     .contact-note { color: var(--muted); font-size: 1.02rem; max-width: 52ch; margin: -12px 0 28px; }
-    .contact-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .contact-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .contact-card.wide { grid-column: span 2; }
     .contact-card {
       display: flex;
       flex-direction: column;
@@ -338,6 +339,7 @@
       .t-date { text-align: left; padding: 0 0 4px; }
       .pub { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: minmax(0, 1fr); }
+      .contact-card.wide { grid-column: auto; }
       .pub-year { text-align: left; padding: 0 0 4px; }
       .terms { grid-template-columns: 1fr; gap: 0; }
       .terms dd { margin-bottom: 8px; }
@@ -390,7 +392,7 @@
         <div class="section-head"><h2>Education</h2></div>
         <ol class="timeline">
           <li class="t-item reveal" data-kind="education">
-            <div class="t-date">2024 – Present</div>
+            <div class="t-date">Sep 2024 – Present</div>
             <div class="t-body">
               <h3>PhD in Computer Science</h3>
               <p class="t-org">New Jersey Institute of Technology</p>
@@ -564,7 +566,7 @@
         <div class="section-head"><h2>Contact</h2></div>
         <p class="contact-note">Reach out about research, collaborations or opportunities. Email is the quickest way to reach me.</p>
         <div class="contact-grid">
-          <div class="contact-card">
+          <div class="contact-card wide">
             <span class="label">Email</span>
             <div class="email-row">
               <a class="value" href="mailto:ss5375@njit.edu">ss5375@njit.edu</a>
@@ -578,6 +580,10 @@
           <a class="contact-card" href="https://github.com/shameenshrestha">
             <span class="label">GitHub</span>
             <span class="value">shameenshrestha</span>
+          </a>
+          <a class="contact-card" href="https://github.com/Shameen5375">
+            <span class="label">GitHub</span>
+            <span class="value">Shameen5375</span>
           </a>
           <a class="contact-card" href="https://scholar.google.com/citations?user=PZz6mJEAAAAJ&amp;hl=en">
             <span class="label">Google Scholar</span>
