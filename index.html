@@ -7,41 +7,53 @@
   <meta name="description" content="Shameen Shrestha — PhD student in Computer Science at NJIT researching explainability, interpretability, and attribution in AI.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
-    /* Layout: two-column intro (text left, headshot right), then a single vertical timeline of work + education, newest first. */
+    /* Layout: academic homepage. Dark top bar (name left, links right), dark hero band with a
+       network-graph backdrop (photo left, intro right), then light single-column sections. */
     :root {
+      --bar: #1b1b30;
+      --hero: #22223b;
+      --hero-ink: #f2e9e4;
+      --hero-muted: #c9ada7;
+      --node: 154, 140, 152;          /* #9a8c98 as RGB for the canvas */
       --bg: #f2e9e4;
-      --surface: #faf6f3;
       --ink: #22223b;
       --muted: #4a4e69;
-      --line: #ddcbc6;
+      --line: #d6c4bf;
       --accent: #4a4e69;
-      --accent-soft: #e8dad5;
-      --display: "Newsreader", Georgia, "Times New Roman", serif;
-      --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-      --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+      --photo-bg: #4a4e69;
+      --serif: "EB Garamond", Garamond, "Times New Roman", serif;
+      --hero-serif: "Merriweather", Georgia, "Times New Roman", serif;
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
+        --bar: #131324;
+        --hero: #1a1a2e;
+        --hero-ink: #f2e9e4;
+        --hero-muted: #c9ada7;
+        --node: 154, 140, 152;
         --bg: #22223b;
-        --surface: #2b2b47;
         --ink: #f2e9e4;
-        --muted: #9a8c98;
+        --muted: #c9ada7;
         --line: #3a3b57;
         --accent: #c9ada7;
-        --accent-soft: #31314e;
+        --photo-bg: #4a4e69;
         color-scheme: dark;
       }
     }
     :root[data-theme="dark"] {
+      --bar: #131324;
+      --hero: #1a1a2e;
+      --hero-ink: #f2e9e4;
+      --hero-muted: #c9ada7;
+      --node: 154, 140, 152;
       --bg: #22223b;
-      --surface: #2b2b47;
       --ink: #f2e9e4;
-      --muted: #9a8c98;
+      --muted: #c9ada7;
       --line: #3a3b57;
       --accent: #c9ada7;
-      --accent-soft: #31314e;
+      --photo-bg: #4a4e69;
       color-scheme: dark;
     }
 
@@ -51,414 +63,234 @@
       margin: 0;
       background: var(--bg);
       color: var(--ink);
-      font: 16px/1.65 var(--body);
+      font: 1.2rem/1.55 var(--serif);
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-    .wrap { max-width: 1040px; margin: 0 auto; padding-inline: 24px; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding-inline: 32px; }
+    .content { max-width: 960px; }
 
-    /* Nav */
-    nav {
+    /* Top bar */
+    .topbar {
       position: sticky;
       top: 0;
       z-index: 10;
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--line);
+      background: var(--bar);
+      color: var(--hero-ink);
     }
-    nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
-    .brand { font-family: var(--display); font-weight: 600; font-size: 1.2rem; color: var(--ink); white-space: nowrap; }
+    .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 58px; }
+    .brand { font-family: var(--serif); font-size: 1.6rem; color: var(--hero-ink); text-decoration: none; white-space: nowrap; }
     .brand:hover { text-decoration: none; }
-    .nav-links { display: flex; gap: 22px; font-size: 0.92rem; }
-    .nav-links a { color: var(--muted); }
-    .nav-links a:hover { color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 28px; font-family: var(--serif); font-size: 1.12rem; }
+    .nav-links a { color: var(--hero-ink); text-decoration: none; opacity: 0.85; white-space: nowrap; }
+    .nav-links a:hover { opacity: 1; text-decoration: underline; }
 
-    /* Intro */
-    .intro {
+    /* Hero */
+    .hero { position: relative; background: var(--hero); color: var(--hero-ink); overflow: hidden; }
+    .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .hero .wrap {
+      position: relative;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 300px;
-      gap: 56px;
-      align-items: center;
-      padding-block: 72px 64px;
+      grid-template-columns: 230px minmax(0, 1fr);
+      gap: 32px;
+      align-items: start;
+      padding-block: 36px 44px;
     }
-    .eyebrow {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 0 0 12px;
-    }
-    h1 {
-      font-family: var(--display);
-      font-weight: 600;
-      font-size: clamp(2.6rem, 6vw, 4rem);
-      line-height: 1.02;
-      letter-spacing: -0.02em;
-      margin: 0 0 18px;
-      text-wrap: balance;
-    }
-    .about p { color: var(--muted); margin: 0 0 14px; max-width: 62ch; }
-    .about .lede { font-size: 1rem; font-style: italic; color: var(--ink); margin: 0 0 12px; }
-
-    .headshot {
-      position: relative;
+    .photo {
       margin: 0;
-      width: 100%;
-      max-width: 300px;
-      aspect-ratio: 4 / 5;
-      justify-self: end;
-    }
-    .headshot::before {
-      content: "";
-      position: absolute;
-      inset: 14px -14px -14px 14px;
-      border: 1px solid var(--accent);
-      border-radius: 14px;
-    }
-    .headshot-frame {
+      width: 230px;
+      max-width: 100%;
+      aspect-ratio: 7 / 8;
+      background: var(--photo-bg);
       position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 14px;
-      overflow: hidden;
-      background: var(--accent-soft);
       display: grid;
       place-items: center;
     }
-    .headshot-frame .initials {
-      font-family: var(--display);
-      font-size: 4.5rem;
-      color: var(--accent);
-      opacity: 0.55;
-    }
-    .headshot-frame img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .photo .initials { font-family: var(--serif); font-size: 4rem; color: var(--hero-muted); }
+    .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero-text { font-family: var(--hero-serif); font-size: 1.12rem; line-height: 1.6; min-width: 0; }
+    .hero-text p { margin: 0 0 16px; }
+    .hero-text p:last-child { margin-bottom: 0; }
+    .hero-role { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; letter-spacing: 0.01em; color: var(--hero-ink); }
+    .hero-tagline { font-style: italic; color: var(--hero-muted); }
+    .hero-text .body { text-align: justify; hyphens: auto; }
 
     /* Sections */
-    section { padding-block: 56px; border-top: 1px solid var(--line); scroll-margin-top: 60px; }
-    .section-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px 24px;
-      margin-bottom: 32px;
-    }
-    h2 {
-      font-family: var(--display);
-      font-weight: 600;
-      font-size: 2rem;
-      letter-spacing: -0.01em;
-      margin: 0;
-    }
+    main .wrap > .content { border-top: 2px solid var(--line); margin-top: 12px; }
+    section { padding-top: 34px; scroll-margin-top: 70px; }
+    section:last-child { padding-bottom: 56px; }
+    h2 { font-family: var(--serif); font-weight: 600; font-size: 2rem; margin: 0 0 14px; line-height: 1.2; }
+    .h2-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+    .h2-row a { font-size: 1.05rem; }
+    h3 { font-size: 1.2rem; font-weight: 700; margin: 0; }
+    .muted { color: var(--muted); }
 
-    /* Timeline */
-    .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
-    .timeline::before {
-      content: "";
-      position: absolute;
-      left: 170px;
-      top: 6px;
-      bottom: 6px;
-      width: 1px;
-      background: var(--line);
-    }
-    .t-item {
-      display: grid;
-      grid-template-columns: 170px minmax(0, 1fr);
-      gap: 0 36px;
-      padding-bottom: 36px;
-      position: relative;
-    }
-    .t-item:last-child { padding-bottom: 0; }
-    .t-date {
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      color: var(--muted);
-      padding-top: 3px;
-      padding-right: 20px;
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-    }
-    .t-item::before {
-      content: "";
-      position: absolute;
-      left: 165px;
-      top: 8px;
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: var(--bg);
-      border: 2px solid var(--accent);
-    }
-    .t-item[data-kind="education"]::before { background: var(--accent); }
-    .t-body { min-width: 0; }
-    .t-kind {
-      display: inline-block;
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: var(--accent-soft);
-      padding: 1px 8px;
-      border-radius: 4px;
-      margin-bottom: 6px;
-    }
-    h3 { font-size: 1.08rem; font-weight: 600; margin: 0; }
-    .t-org { color: var(--muted); font-size: 0.95rem; margin: 2px 0 0; }
-    .t-body ul { margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 0.95rem; }
-    .t-body li { margin: 4px 0; }
-    .terms {
-      display: grid;
-      grid-template-columns: max-content minmax(0, 1fr);
-      gap: 6px 16px;
-      margin: 12px 0 0;
-      font-size: 0.93rem;
-    }
-    .terms dt { font-family: var(--mono); font-size: 0.8rem; color: var(--ink); padding-top: 2px; white-space: nowrap; }
-    .terms dd { margin: 0; color: var(--muted); }
+    /* Education */
+    .degrees { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 10px 20px; margin: 0; }
+    .degrees dt { font-weight: 700; }
+    .degrees dd { margin: 0; }
 
-    .reveal { transition: opacity 0.5s ease, transform 0.5s ease; }
-    .js .reveal.pending { opacity: 0.001; transform: translateY(14px); }
+    /* Bulleted lists */
+    .squares { margin: 0; padding-left: 22px; list-style: square; }
+    .squares li { margin: 6px 0; }
 
-    /* Publications */
-    .scholar-link { font-size: 0.92rem; font-weight: 500; }
-    .pubs { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px; }
-    .pub { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 0 36px; }
-    .pub-year { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); text-align: right; padding: 3px 20px 0 0; }
-    .pub-body { min-width: 0; }
-    .pub h3 { font-size: 1.08rem; line-height: 1.4; text-wrap: balance; }
-    .pub h3 a { color: var(--ink); }
-    .pub h3 a:hover { color: var(--accent); }
-    .pub-authors { margin: 4px 0 0; color: var(--muted); font-size: 0.95rem; }
-    .pub-authors strong { color: var(--ink); font-weight: 600; }
-    .pub-venue { margin: 6px 0 0; font-family: var(--mono); font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .pub-venue .t-kind { margin: 0; }
-    .pub-summary { margin: 10px 0 0; color: var(--muted); font-size: 0.95rem; max-width: 72ch; }
-    .pub-links { display: flex; gap: 16px; margin-top: 10px; font-size: 0.9rem; font-weight: 500; }
+    /* Entries (publications, experience, projects) */
+    .entries { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+    .entry-line { margin: 0; }
+    .entry-line .when { white-space: nowrap; }
+    .entry .squares { margin-top: 6px; }
+    .entry .note { margin: 4px 0 0; color: var(--muted); }
 
-    /* Projects */
-    .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-    .project {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 22px 24px;
-      min-width: 0;
-    }
-    .project h3 { margin-bottom: 4px; }
-    .project .memo { font-size: 0.85rem; color: var(--ink); margin: 0 0 4px; }
-    .project .tags { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); margin: 0 0 10px; }
-    .project p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    .pub-links { display: inline-flex; gap: 12px; margin-left: 6px; }
+
+    .terms { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 18px; margin: 8px 0 0; }
+    .terms dt { font-style: italic; color: var(--muted); white-space: nowrap; }
+    .terms dd { margin: 0; }
 
     /* Skills */
-    .skills { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 14px 24px; margin: 0; }
-    .skills dt { font-weight: 600; font-size: 0.95rem; }
-    .skills dd { margin: 0; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 6px; }
-    .chip {
-      font-size: 0.85rem;
-      padding: 2px 10px;
-      border-radius: 6px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-    }
-
-    footer { border-top: 1px solid var(--line); padding-block: 40px 56px; }
-    footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: var(--muted); font-size: 0.9rem; }
-
+    .skills { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 20px; margin: 0; }
+    .skills dt { font-weight: 700; }
+    .skills dd { margin: 0; }
 
     /* Contact */
-    #contact { background: var(--accent-soft); padding-block: 56px 72px; }
-    .contact-note { color: var(--muted); font-size: 1.02rem; max-width: 52ch; margin: -12px 0 28px; }
-    .contact-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-    .contact-card.wide { grid-column: span 2; }
-    .contact-card {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-width: 0;
-      padding: 20px 22px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      color: var(--ink);
-    }
-    a.contact-card:hover { border-color: var(--accent); text-decoration: none; }
-    .contact-card .label { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
-    .contact-card .value { font-weight: 600; font-size: 1.02rem; overflow-wrap: anywhere; }
-    .contact-card a.value { color: var(--ink); }
-    .contact-card a.value:hover { color: var(--accent); text-decoration: none; }
-    .email-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .contact { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 20px; margin: 0; }
+    .contact dt { font-weight: 700; }
+    .contact dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
     .copy-btn {
       font: inherit;
-      font-size: 0.82rem;
-      padding: 4px 12px;
-      border-radius: 999px;
+      font-size: 0.9rem;
+      margin-left: 10px;
+      padding: 1px 10px;
       border: 1px solid var(--line);
-      background: var(--bg);
+      border-radius: 4px;
+      background: transparent;
       color: var(--ink);
       cursor: pointer;
+      vertical-align: middle;
     }
-    .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .copy-btn:hover { border-color: var(--accent); }
 
-    @media (max-width: 820px) {
-      .intro { grid-template-columns: minmax(0, 1fr) 200px; gap: 32px; padding-block: 48px; }
-      .projects { grid-template-columns: minmax(0, 1fr); }
-      .contact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 640px) {
+    footer { background: var(--bar); color: var(--hero-muted); font-size: 1rem; }
+    footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 22px; }
+    footer a { color: var(--hero-ink); }
+
+    @media (max-width: 760px) {
       .wrap { padding-inline: 16px; }
-      nav .wrap { flex-wrap: wrap; height: auto; gap: 4px; padding-block: 10px 8px; }
-      .brand { font-size: 1.05rem; }
+      body { font-size: 1.12rem; }
+      .topbar .wrap { flex-wrap: wrap; gap: 2px; padding-block: 10px 8px; }
+      .brand { font-size: 1.4rem; }
       .nav-links {
         width: 100%;
-        gap: 18px;
-        font-size: 0.88rem;
+        gap: 20px;
+        font-size: 1.02rem;
         overflow-x: auto;
         scrollbar-width: none;
-        white-space: nowrap;
         padding-bottom: 2px;
       }
       .nav-links::-webkit-scrollbar { display: none; }
-      section { scroll-margin-top: 90px; }
-      .intro { grid-template-columns: 1fr; }
-      .headshot { order: -1; justify-self: start; max-width: 180px; }
-      .headshot-frame .initials { font-size: 3rem; }
-      .timeline::before { left: 5px; }
-      .t-item { grid-template-columns: 1fr; padding-left: 28px; }
-      .t-item::before { left: 0; top: 5px; }
-      .t-date { text-align: left; padding: 0 0 4px; }
-      .pub { grid-template-columns: 1fr; }
-      .contact-grid { grid-template-columns: minmax(0, 1fr); }
-      .contact-card.wide { grid-column: auto; }
-      .pub-year { text-align: left; padding: 0 0 4px; }
+      section { scroll-margin-top: 100px; }
+      .hero .wrap { grid-template-columns: 1fr; gap: 22px; padding-block: 28px 32px; }
+      .photo { width: 170px; }
+      .hero-text { font-size: 1.02rem; }
+      .hero-text .body { text-align: left; }
+      .degrees, .skills, .contact { grid-template-columns: 1fr; gap: 2px; }
+      .degrees dd, .skills dd, .contact dd { margin-bottom: 10px; }
       .terms { grid-template-columns: 1fr; gap: 0; }
-      .terms dd { margin-bottom: 8px; }
-      .skills { grid-template-columns: 1fr; gap: 4px; }
-      .skills dd { margin-bottom: 12px; }
+      .terms dd { margin-bottom: 6px; }
     }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .reveal, .js .reveal.pending { transition: none; opacity: 1; transform: none; }
-    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   </style>
 </head>
 <body>
-  <nav>
+  <header class="topbar">
     <div class="wrap">
       <a class="brand" href="#top">Shameen Shrestha</a>
-      <div class="nav-links">
+      <nav class="nav-links" aria-label="Sections">
         <a href="#education">Education</a>
         <a href="#publications">Publications</a>
         <a href="#experience">Experience</a>
-        <a href="#volunteering">Volunteering</a>
         <a href="#projects">Projects</a>
         <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
-        <a href="resume.html">Resume</a>
-      </div>
+        <a href="resume.html">Curriculum Vitae</a>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <main id="top">
-    <div class="wrap intro">
-      <div class="about">
-        <p class="eyebrow">Explainable AI &amp; Interpretability Researcher</p>
-        <h1>Shameen Shrestha</h1>
-        <p class="lede">AI that can be understood, not just used.</p>
-        <p>I’m a PhD student in Computer Science at NJIT, researching explainability, interpretability, and attribution in AI. Modern AI systems are remarkably capable, yet the processes behind their predictions remain largely hidden. My research develops methods to identify the evidence that drives those predictions and understand how models represent and use it internally. I also study how to evaluate explanations, ensuring they faithfully reflect what a model computes rather than what we expect to see.</p>
-      </div>
-
-      <figure class="headshot">
-        <div class="headshot-frame">
-          <span class="initials" aria-hidden="true">SS</span>
-          <!-- Add your photo as headshot.jpg in this folder; initials show until then. -->
-          <img src="headshot.jpg" alt="Portrait of Shameen Shrestha" onerror="this.remove()">
-        </div>
+  <div class="hero" id="top">
+    <canvas id="network" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <figure class="photo">
+        <span class="initials" aria-hidden="true">SS</span>
+        <!-- Add your photo as headshot.jpg in this folder; initials show until then. -->
+        <img src="headshot.jpg" alt="Portrait of Shameen Shrestha" onerror="this.remove()">
       </figure>
+      <div class="hero-text">
+        <h1 class="sr-only">Shameen Shrestha</h1>
+        <p class="hero-role">Explainable AI &amp; Interpretability Researcher</p>
+        <p class="hero-tagline">AI that can be understood, not just used.</p>
+        <p class="body">I’m a PhD student in Computer Science at NJIT, researching explainability, interpretability, and attribution in AI. Modern AI systems are remarkably capable, yet the processes behind their predictions remain largely hidden. My research develops methods to identify the evidence that drives those predictions and understand how models represent and use it internally. I also study how to evaluate explanations, ensuring they faithfully reflect what a model computes rather than what we expect to see.</p>
+      </div>
     </div>
+  </div>
 
-    <section id="education">
-      <div class="wrap">
-        <div class="section-head"><h2>Education</h2></div>
-        <ol class="timeline">
-          <li class="t-item reveal" data-kind="education">
-            <div class="t-date">Sep 2024 – Present</div>
-            <div class="t-body">
-              <h3>PhD in Computer Science</h3>
-              <p class="t-org">New Jersey Institute of Technology</p>
-            </div>
-          </li>
+  <main>
+    <div class="wrap">
+      <div class="content">
 
-          <li class="t-item reveal" data-kind="education">
-            <div class="t-date">2018 – 2022</div>
-            <div class="t-body">
-              <h3>Bachelor’s in Computer Engineering</h3>
-              <p class="t-org">Kathmandu Engineering College, Tribhuvan University</p>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
+        <section id="education">
+          <h2>Education</h2>
+          <dl class="degrees">
+            <dt>Ph.D.</dt>
+            <dd>Computer Science, New Jersey Institute of Technology, <span class="when">Sep 2024 – Present</span></dd>
+            <dt>B.E.</dt>
+            <dd>Computer Engineering, Kathmandu Engineering College, Tribhuvan University, <span class="when">2018 – 2022</span></dd>
+          </dl>
+        </section>
 
-    <section id="publications">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Publications</h2>
-          <a class="scholar-link" href="https://scholar.google.com/citations?user=PZz6mJEAAAAJ&amp;hl=en">Google Scholar →</a>
-        </div>
-        <ol class="pubs">
-          <li class="pub">
-            <div class="pub-year">2026</div>
-            <div class="pub-body">
-              <h3><a href="https://arxiv.org/abs/2606.03885">Attribution via Distributional Paths for Information Revelation</a></h3>
-              <p class="pub-authors">Kieran A. Murphy, <strong>Shameen Shrestha</strong></p>
-              <p class="pub-venue"><span class="t-kind">Preprint</span> arXiv:2606.03885</p>
-              <p class="pub-summary">Introduces Reveal-IG, which lifts path attribution from input space to a path over structured probe distributions, progressively revealing information about the input. It keeps completeness, avoids baseline path artifacts, and gives stable, signed attributions on ImageNet and tabular regression.</p>
-              <div class="pub-links"><a href="https://arxiv.org/abs/2606.03885">arXiv</a><a href="https://arxiv.org/pdf/2606.03885">PDF</a></div>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
+        <section id="interests">
+          <h2>Research Interests</h2>
+          <ul class="squares">
+            <li>Explainable AI and feature attribution</li>
+            <li>Interpretability: how models represent and use evidence internally</li>
+            <li>Evaluating whether explanations faithfully reflect what a model computes</li>
+          </ul>
+        </section>
 
-    <section id="experience">
-      <div class="wrap">
-        <div class="section-head"><h2>Experience</h2></div>
-        <ol class="timeline">
-          <li class="t-item reveal" data-kind="work">
-            <div class="t-date">Sep 2024 – Present</div>
-            <div class="t-body">
-              <span class="t-kind">Teaching</span>
-              <h3>Graduate Teaching Assistant</h3>
-              <p class="t-org">New Jersey Institute of Technology · Newark, NJ</p>
+        <section id="publications">
+          <div class="h2-row">
+            <h2>Publications</h2>
+            <a href="https://scholar.google.com/citations?user=PZz6mJEAAAAJ&amp;hl=en">Google Scholar</a>
+          </div>
+          <ol class="entries">
+            <li class="entry">
+              <p class="entry-line">Kieran A. Murphy, <strong>Shameen Shrestha</strong>. “Attribution via Distributional Paths for Information Revelation.” <em>arXiv preprint arXiv:2606.03885</em>, 2026. <span class="pub-links"><a href="https://arxiv.org/abs/2606.03885">[arXiv]</a><a href="https://arxiv.org/pdf/2606.03885">[PDF]</a></span></p>
+              <p class="note">Introduces Reveal-IG, which lifts path attribution from input space to a path over structured probe distributions, progressively revealing information about the input. It keeps completeness, avoids baseline path artifacts, and gives stable, signed attributions on ImageNet and tabular regression.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section id="experience">
+          <h2>Experience</h2>
+          <ol class="entries">
+            <li class="entry">
+              <p class="entry-line"><strong>Graduate Teaching Assistant</strong>, New Jersey Institute of Technology, Newark, NJ, <span class="when">Sep 2024 – Present</span></p>
               <dl class="terms">
-                <dt>Fall 2026</dt><dd>Introduction to Cybersecurity · Introduction to Generative AI · Introduction to Machine Learning (Honors)</dd>
+                <dt>Fall 2026</dt><dd>Introduction to Cybersecurity; Introduction to Generative AI; Introduction to Machine Learning (Honors)</dd>
                 <dt>Summer 2026</dt><dd>Capstone</dd>
-                <dt>Spring 2026</dt><dd>Introduction to Cybersecurity · Deep Learning · Introduction to Generative AI</dd>
-                <dt>Fall 2025</dt><dd>Introduction to Cybersecurity · Introduction to Generative AI</dd>
-                <dt>Summer 2025</dt><dd>CS 100: Roadmap to Computing · Tutoring</dd>
-                <dt>Spring 2025</dt><dd>Database System Design and Management (Honors) · Introduction to Cryptography</dd>
+                <dt>Spring 2026</dt><dd>Introduction to Cybersecurity; Deep Learning; Introduction to Generative AI</dd>
+                <dt>Fall 2025</dt><dd>Introduction to Cybersecurity; Introduction to Generative AI</dd>
+                <dt>Summer 2025</dt><dd>CS 100: Roadmap to Computing; Tutoring</dd>
+                <dt>Spring 2025</dt><dd>Database System Design and Management (Honors); Introduction to Cryptography</dd>
                 <dt>Fall 2024</dt><dd>Database System Design and Management</dd>
               </dl>
-            </div>
-          </li>
-
-          <li class="t-item reveal" data-kind="work">
-            <div class="t-date">Apr 2022 – Jul 2024</div>
-            <div class="t-body">
-              <h3>Software/Data Engineer</h3>
-              <p class="t-org">LIS Nepal Pvt. Ltd · Lalitpur, Nepal</p>
-              <ul>
+            </li>
+            <li class="entry">
+              <p class="entry-line"><strong>Software/Data Engineer</strong>, LIS Nepal Pvt. Ltd, Lalitpur, Nepal, <span class="when">Apr 2022 – Jul 2024</span></p>
+              <ul class="squares">
                 <li>Engineered and maintained production data pipelines for major retail chains, running daily loads of sales and inventory data from diverse source systems through staging and transformation layers into Snowflake.</li>
                 <li>Built the data platform end to end: set up databases, designed warehouse schemas and data marts, and wrote the history-conversion and incremental daily-load processes that kept them current.</li>
                 <li>Designed and delivered the reporting layer on top of the warehouse: executive dashboards and operational reports in Power BI, Tableau, Looker and MicroStrategy, with DAX measures that turned raw transactions into sales and inventory insight.</li>
@@ -466,138 +298,91 @@
                 <li>Within Dataiku, developed anomaly-detection analysis on retail sales data and delivered it as an interactive application, giving business teams a direct view of irregular sales behavior.</li>
                 <li>Put data-quality controls in place through unit testing and source-to-target reconciliation, so every figure in a report could be traced back to its source system.</li>
               </ul>
-            </div>
-          </li>
-
-          <li class="t-item reveal" data-kind="work">
-            <div class="t-date">Nov 2021 – Mar 2022</div>
-            <div class="t-body">
-              <h3>Software/Data Engineer Intern</h3>
-              <p class="t-org">LIS Nepal Pvt. Ltd · Lalitpur, Nepal</p>
-              <ul>
+            </li>
+            <li class="entry">
+              <p class="entry-line"><strong>Software/Data Engineer Intern</strong>, LIS Nepal Pvt. Ltd, Lalitpur, Nepal, <span class="when">Nov 2021 – Mar 2022</span></p>
+              <ul class="squares">
                 <li>Built a foundation in enterprise data warehousing, ETL design and business intelligence on retail client projects.</li>
                 <li>Wrote and tuned SQL queries and Snowflake stored procedures, and designed a dynamic materialized view to speed up reporting queries.</li>
                 <li>Carried out the migration of reports and dashboards from Tableau to Power BI, validating each rebuilt report against the original for accuracy.</li>
               </ul>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
+            </li>
+          </ol>
+        </section>
 
-    <section id="volunteering">
-      <div class="wrap">
-        <div class="section-head"><h2>Volunteering</h2></div>
-        <ol class="timeline">
-          <li class="t-item reveal" data-kind="volunteer">
-            <div class="t-date">Nov 2021 – Jun 2023</div>
-            <div class="t-body">
-              <h3>Member</h3>
-              <p class="t-org">Women in Big Data · Nepal</p>
-              <ul>
+        <section id="volunteering">
+          <h2>Volunteering</h2>
+          <ol class="entries">
+            <li class="entry">
+              <p class="entry-line"><strong>Member</strong>, Women in Big Data, Nepal, <span class="when">Nov 2021 – Jun 2023</span></p>
+              <ul class="squares">
                 <li>Ran hands-on workshops on data technologies at colleges.</li>
                 <li>Organized knowledge-sharing sessions and led mentorship programs connecting students with industry experts.</li>
               </ul>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
+            </li>
+          </ol>
+        </section>
 
-    <section id="projects">
-      <div class="wrap">
-        <div class="section-head"><h2>Projects</h2></div>
-        <div class="projects">
-          <article class="project reveal">
-            <h3>Neuro-Symbolic Reasoning with Symbolic Working Memory</h3>
-            <p class="memo">Final project for Neuro-Symbolic AI · Fall 2025 · NJIT</p>
-            <p class="tags">LLMs · Logic · Neuro-Symbolic AI</p>
-            <p>Augments LLMs with explicit fact and rule tracking, extended to propositional and first-order logic. Evaluated on ProofWriter and PrOntoQA, with more stable reasoning under rule shuffling and noisy premises.</p>
-          </article>
-          <article class="project reveal">
-            <h3>Adversarial Attacks on LLM Summarization</h3>
-            <p class="memo">Final project for Deep Learning · Fall 2025 · NJIT</p>
-            <p class="tags">LLMs · Hugging Face · NLP Robustness</p>
-            <p>Character-, word-, and sentence-level attacks on T5, BART, PEGASUS, and DistilBART over CNN/DailyMail, measured by attack success rate, ROUGE drop, and SBERT similarity, with cross-model transfer analysis.</p>
-          </article>
-          <article class="project reveal">
-            <h3>Adversarial Vulnerability in Low-ID vs High-ID Regions</h3>
-            <p class="memo">Final project for Dimensionality and Scalability in AI · Spring 2025 · NJIT</p>
-            <p class="tags">CNNs · Adversarial ML · Robustness</p>
-            <p>FGSM, PGD, and DeepFool on standard and adversarially trained CNNs show that high-LID regions have sharper loss surfaces and higher attack success than low-LID regions.</p>
-          </article>
-          <article class="project reveal">
-            <h3>Real-Time Sign Language Detection</h3>
-            <p class="memo">Major project for Bachelor’s in Computer Engineering</p>
-            <p class="tags">Deep Learning · Computer Vision</p>
-            <p>A PyTorch CNN with live OpenCV video processing, running end-to-end from camera input to gesture classification in real time.</p>
-          </article>
-        </div>
-      </div>
-    </section>
+        <section id="projects">
+          <h2>Projects</h2>
+          <ol class="entries">
+            <li class="entry">
+              <p class="entry-line"><strong>Neuro-Symbolic Reasoning with Symbolic Working Memory</strong> <span class="muted">— Final project for Neuro-Symbolic AI, Fall 2025, NJIT</span></p>
+              <p class="note">Augments LLMs with explicit fact and rule tracking, extended to propositional and first-order logic. Evaluated on ProofWriter and PrOntoQA, with more stable reasoning under rule shuffling and noisy premises.</p>
+            </li>
+            <li class="entry">
+              <p class="entry-line"><strong>Adversarial Attacks on LLM Summarization</strong> <span class="muted">— Final project for Deep Learning, Fall 2025, NJIT</span></p>
+              <p class="note">Character-, word-, and sentence-level attacks on T5, BART, PEGASUS, and DistilBART over CNN/DailyMail, measured by attack success rate, ROUGE drop, and SBERT similarity, with cross-model transfer analysis.</p>
+            </li>
+            <li class="entry">
+              <p class="entry-line"><strong>Adversarial Vulnerability in Low-ID vs High-ID Regions</strong> <span class="muted">— Final project for Dimensionality and Scalability in AI, Spring 2025, NJIT</span></p>
+              <p class="note">FGSM, PGD, and DeepFool on standard and adversarially trained CNNs show that high-LID regions have sharper loss surfaces and higher attack success than low-LID regions.</p>
+            </li>
+            <li class="entry">
+              <p class="entry-line"><strong>Real-Time Sign Language Detection</strong> <span class="muted">— Major project for Bachelor’s in Computer Engineering</span></p>
+              <p class="note">A PyTorch CNN with live OpenCV video processing, running end-to-end from camera input to gesture classification in real time.</p>
+            </li>
+          </ol>
+        </section>
 
-    <section id="skills">
-      <div class="wrap">
-        <div class="section-head"><h2>Skills</h2></div>
-        <dl class="skills">
-          <dt>Languages</dt>
-          <dd><span class="chip">Python</span><span class="chip">R</span><span class="chip">C</span><span class="chip">C++</span><span class="chip">Java</span></dd>
-          <dt>ML &amp; Deep Learning</dt>
-          <dd><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">Scikit-Learn</span><span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">OpenCV</span><span class="chip">CNNs</span><span class="chip">Transfer Learning</span><span class="chip">Statistical Modeling</span></dd>
-          <dt>Generative AI &amp; LLMs</dt>
-          <dd><span class="chip">Hugging Face Transformers</span><span class="chip">T5</span><span class="chip">BART</span><span class="chip">PEGASUS</span><span class="chip">Sentence-BERT</span><span class="chip">Text Summarization</span><span class="chip">Embeddings</span><span class="chip">LLM Reasoning Evaluation</span></dd>
-          <dt>Adversarial &amp; Robust ML</dt>
-          <dd><span class="chip">FGSM</span><span class="chip">PGD</span><span class="chip">DeepFool</span><span class="chip">Adversarial Training</span><span class="chip">Attack Transferability</span><span class="chip">Local Intrinsic Dimensionality</span><span class="chip">Loss-Landscape Analysis</span></dd>
-          <dt>Neuro-Symbolic Reasoning</dt>
-          <dd><span class="chip">Symbolic Working Memory</span><span class="chip">Propositional Logic</span><span class="chip">First-Order Logic</span><span class="chip">ProofWriter</span><span class="chip">PrOntoQA</span></dd>
-          <dt>Data Engineering</dt>
-          <dd><span class="chip">Snowflake</span><span class="chip">PostgreSQL</span><span class="chip">ETL/ELT Pipelines</span><span class="chip">Data Warehousing</span><span class="chip">Data Modeling</span><span class="chip">Data Marts</span><span class="chip">Stored Procedures</span><span class="chip">Materialized Views</span><span class="chip">Incremental Loads</span><span class="chip">Data Quality &amp; Reconciliation</span></dd>
-          <dt>BI &amp; Analytics</dt>
-          <dd><span class="chip">Power BI</span><span class="chip">Tableau</span><span class="chip">Looker</span><span class="chip">MicroStrategy</span><span class="chip">Dataiku</span><span class="chip">Matplotlib</span></dd>
-          <dt>Cloud &amp; Tools</dt>
-          <dd><span class="chip">Microsoft Azure</span><span class="chip">Git</span><span class="chip">Bitbucket</span></dd>
-          <dt>Leadership</dt>
-          <dd><span class="chip">Teaching</span><span class="chip">Mentorship</span><span class="chip">Workshop Facilitation</span><span class="chip">Technical Communication</span></dd>
-        </dl>
+        <section id="skills">
+          <h2>Skills</h2>
+          <dl class="skills">
+            <dt>Languages</dt><dd>Python, R, C, C++, Java</dd>
+            <dt>ML &amp; Deep Learning</dt><dd>PyTorch, TensorFlow, Scikit-Learn, Pandas, NumPy, OpenCV, CNNs, Transfer Learning, Statistical Modeling</dd>
+            <dt>Generative AI &amp; LLMs</dt><dd>Hugging Face Transformers, T5, BART, PEGASUS, Sentence-BERT, Text Summarization, Embeddings, LLM Reasoning Evaluation</dd>
+            <dt>Adversarial &amp; Robust ML</dt><dd>FGSM, PGD, DeepFool, Adversarial Training, Attack Transferability, Local Intrinsic Dimensionality, Loss-Landscape Analysis</dd>
+            <dt>Neuro-Symbolic Reasoning</dt><dd>Symbolic Working Memory, Propositional Logic, First-Order Logic, ProofWriter, PrOntoQA</dd>
+            <dt>Data Engineering</dt><dd>Snowflake, PostgreSQL, ETL/ELT Pipelines, Data Warehousing, Data Modeling, Data Marts, Stored Procedures, Materialized Views, Incremental Loads, Data Quality &amp; Reconciliation</dd>
+            <dt>BI &amp; Analytics</dt><dd>Power BI, Tableau, Looker, MicroStrategy, Dataiku, Matplotlib</dd>
+            <dt>Cloud &amp; Tools</dt><dd>Microsoft Azure, Git, Bitbucket</dd>
+            <dt>Leadership</dt><dd>Teaching, Mentorship, Workshop Facilitation, Technical Communication</dd>
+          </dl>
+        </section>
+
+        <section id="contact">
+          <h2>Contact</h2>
+          <p class="entry-line" style="margin-bottom: 12px;">Reach out about research, collaborations or opportunities. Email is the quickest way to reach me.</p>
+          <dl class="contact">
+            <dt>Email</dt>
+            <dd><a href="mailto:ss5375@njit.edu" id="email-link">ss5375@njit.edu</a><button class="copy-btn" type="button" id="copy-email" data-email="ss5375@njit.edu">Copy</button></dd>
+            <dt>LinkedIn</dt>
+            <dd><a href="https://www.linkedin.com/in/shameen-shrestha-0890a416a/">linkedin.com/in/shameen-shrestha</a></dd>
+            <dt>GitHub</dt>
+            <dd><a href="https://github.com/shameenshrestha">github.com/shameenshrestha</a> · <a href="https://github.com/Shameen5375">github.com/Shameen5375</a></dd>
+            <dt>Google Scholar</dt>
+            <dd><a href="https://scholar.google.com/citations?user=PZz6mJEAAAAJ&amp;hl=en">Shameen Shrestha</a></dd>
+          </dl>
+        </section>
+
       </div>
-    </section>
-    <section id="contact">
-      <div class="wrap">
-        <div class="section-head"><h2>Contact</h2></div>
-        <p class="contact-note">Reach out about research, collaborations or opportunities. Email is the quickest way to reach me.</p>
-        <div class="contact-grid">
-          <div class="contact-card wide">
-            <span class="label">Email</span>
-            <div class="email-row">
-              <a class="value" href="mailto:ss5375@njit.edu">ss5375@njit.edu</a>
-              <button class="copy-btn" type="button" id="copy-email" data-email="ss5375@njit.edu">Copy</button>
-            </div>
-          </div>
-          <a class="contact-card" href="https://www.linkedin.com/in/shameen-shrestha-0890a416a/">
-            <span class="label">LinkedIn</span>
-            <span class="value">shameen-shrestha</span>
-          </a>
-          <a class="contact-card" href="https://github.com/shameenshrestha">
-            <span class="label">GitHub</span>
-            <span class="value">shameenshrestha</span>
-          </a>
-          <a class="contact-card" href="https://github.com/Shameen5375">
-            <span class="label">GitHub</span>
-            <span class="value">Shameen5375</span>
-          </a>
-          <a class="contact-card" href="https://scholar.google.com/citations?user=PZz6mJEAAAAJ&amp;hl=en">
-            <span class="label">Google Scholar</span>
-            <span class="value">Shameen Shrestha</span>
-          </a>
-        </div>
-      </div>
-    </section>
+    </div>
   </main>
 
   <footer>
     <div class="wrap">
       <span>© 2026 Shameen Shrestha</span>
-      <span><a href="mailto:ss5375@njit.edu">ss5375@njit.edu</a> · <a href="resume.html">Resume</a></span>
+      <span><a href="mailto:ss5375@njit.edu">ss5375@njit.edu</a> · <a href="resume.html">Curriculum Vitae</a></span>
     </div>
   </footer>
 
@@ -607,23 +392,44 @@
     copyBtn.addEventListener('click', () => {
       const done = () => { copyBtn.textContent = 'Copied'; setTimeout(() => { copyBtn.textContent = 'Copy'; }, 1600); };
       (navigator.clipboard ? navigator.clipboard.writeText(copyBtn.dataset.email) : Promise.reject()).then(done).catch(() => {
-        const r = document.createRange(); r.selectNodeContents(copyBtn.previousElementSibling);
+        const r = document.createRange(); r.selectNodeContents(document.getElementById('email-link'));
         const s = getSelection(); s.removeAllRanges(); s.addRange(r);
       });
     });
 
-    // Reveal items as they scroll into view; anything already on screen stays visible.
-    if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.documentElement.classList.add('js');
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) { e.target.classList.remove('pending'); io.unobserve(e.target); }
+    // Network-graph backdrop for the hero: fixed-seed nodes joined to their nearest neighbours.
+    (() => {
+      const canvas = document.getElementById('network');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      function draw() {
+        const w = canvas.clientWidth, h = canvas.clientHeight, dpr = window.devicePixelRatio || 1;
+        canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, w, h);
+        let seed = 7;
+        const rand = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+        // Jittered grid so nodes spread evenly across the band.
+        const cell = 150, cols = Math.ceil(w / cell) + 1, rows = Math.ceil(h / cell) + 1, nodes = [];
+        for (let c = 0; c < cols; c++) for (let r = 0; r < rows; r++) nodes.push({
+          x: (c - 0.5 + rand()) * cell, y: (r - 0.5 + rand()) * cell,
+          r: rand() < 0.15 ? 10 + rand() * 14 : 2 + rand() * 5
         });
-      }, { rootMargin: '0px 0px -8% 0px' });
-      document.querySelectorAll('.reveal').forEach(el => {
-        if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('pending'); io.observe(el); }
-      });
-    }
+        const rgb = getComputedStyle(document.documentElement).getPropertyValue('--node').trim();
+        ctx.strokeStyle = `rgba(${rgb}, 0.22)`;
+        ctx.lineWidth = 1;
+        nodes.forEach((a, i) => {
+          nodes.map((b, j) => ({ j, d: (a.x - b.x) ** 2 + (a.y - b.y) ** 2 }))
+            .filter(o => o.j !== i).sort((p, q) => p.d - q.d).slice(0, 3)
+            .forEach(o => { ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(nodes[o.j].x, nodes[o.j].y); ctx.stroke(); });
+        });
+        ctx.fillStyle = `rgba(${rgb}, 0.3)`;
+        nodes.forEach(n => { ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill(); });
+      }
+      draw();
+      let t;
+      window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 150); });
+    })();
   </script>
 </body>
 </html>
