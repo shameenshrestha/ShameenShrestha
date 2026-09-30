@@ -128,10 +128,28 @@
     h3 { font-size: 1.2rem; font-weight: 700; margin: 0; }
     .muted { color: var(--muted); }
 
-    /* Education */
-    .degrees { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 10px 20px; margin: 0; }
-    .degrees dt { font-weight: 700; }
-    .degrees dd { margin: 0; }
+
+    /* Timeline (education, experience, volunteering) */
+    .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+    .timeline::before { content: ""; position: absolute; left: 170px; top: 8px; bottom: 8px; width: 1px; background: var(--line); }
+    .t-item { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 0 34px; padding-bottom: 30px; position: relative; }
+    .t-item:last-child { padding-bottom: 0; }
+    .t-item::before {
+      content: "";
+      position: absolute;
+      left: 165px;
+      top: 9px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+    }
+    .t-item[data-kind="education"]::before { background: var(--accent); }
+    .t-date { color: var(--muted); font-size: 1.02rem; text-align: right; padding: 2px 22px 0 0; font-variant-numeric: tabular-nums; }
+    .t-body { min-width: 0; }
+    .t-org { margin: 2px 0 0; color: var(--muted); }
+    .t-body .squares, .t-body .terms { margin-top: 8px; }
 
     /* Bulleted lists */
     .squares { margin: 0; padding-left: 22px; list-style: square; }
@@ -196,9 +214,13 @@
       .photo { width: 170px; }
       .hero-text { font-size: 1.02rem; }
       .hero-text .body { text-align: left; }
-      .degrees, .skills, .contact { grid-template-columns: 1fr; gap: 2px; }
-      .degrees dd, .skills dd, .contact dd { margin-bottom: 10px; }
+      .skills, .contact { grid-template-columns: 1fr; gap: 2px; }
+      .skills dd, .contact dd { margin-bottom: 10px; }
       .terms { grid-template-columns: 1fr; gap: 0; }
+      .timeline::before { left: 5px; }
+      .t-item { grid-template-columns: 1fr; padding-left: 28px; }
+      .t-item::before { left: 0; top: 7px; }
+      .t-date { text-align: left; padding: 0 0 2px; }
       .terms dd { margin-bottom: 6px; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -243,12 +265,22 @@
 
         <section id="education">
           <h2>Education</h2>
-          <dl class="degrees">
-            <dt>Ph.D.</dt>
-            <dd>Computer Science, New Jersey Institute of Technology, <span class="when">Sep 2024 – Present</span></dd>
-            <dt>B.E.</dt>
-            <dd>Computer Engineering, Kathmandu Engineering College, Tribhuvan University, <span class="when">2018 – 2022</span></dd>
-          </dl>
+          <ol class="timeline">
+            <li class="t-item" data-kind="education">
+              <div class="t-date">Sep 2024 – Present</div>
+              <div class="t-body">
+                <h3>Ph.D. in Computer Science</h3>
+                <p class="t-org">New Jersey Institute of Technology</p>
+              </div>
+            </li>
+            <li class="t-item" data-kind="education">
+              <div class="t-date">2018 – 2022</div>
+              <div class="t-body">
+                <h3>B.E. in Computer Engineering</h3>
+                <p class="t-org">Kathmandu Engineering College, Tribhuvan University</p>
+              </div>
+            </li>
+          </ol>
         </section>
 
         <section id="publications">
@@ -266,9 +298,12 @@
 
         <section id="experience">
           <h2>Experience</h2>
-          <ol class="entries">
-            <li class="entry">
-              <p class="entry-line"><strong>Graduate Teaching Assistant</strong>, New Jersey Institute of Technology, Newark, NJ, <span class="when">Sep 2024 – Present</span></p>
+          <ol class="timeline">
+            <li class="t-item" data-kind="work">
+              <div class="t-date">Sep 2024 – Present</div>
+              <div class="t-body">
+                <h3>Graduate Teaching Assistant</h3>
+                <p class="t-org">New Jersey Institute of Technology, Newark, NJ</p>
               <dl class="terms">
                 <dt>Fall 2026</dt><dd>Introduction to Cybersecurity; Introduction to Generative AI; Introduction to Machine Learning (Honors)</dd>
                 <dt>Summer 2026</dt><dd>Capstone</dd>
@@ -278,9 +313,13 @@
                 <dt>Spring 2025</dt><dd>Database System Design and Management (Honors); Introduction to Cryptography</dd>
                 <dt>Fall 2024</dt><dd>Database System Design and Management</dd>
               </dl>
+              </div>
             </li>
-            <li class="entry">
-              <p class="entry-line"><strong>Software/Data Engineer</strong>, LIS Nepal Pvt. Ltd, Lalitpur, Nepal, <span class="when">Apr 2022 – Jul 2024</span></p>
+            <li class="t-item" data-kind="work">
+              <div class="t-date">Apr 2022 – Jul 2024</div>
+              <div class="t-body">
+                <h3>Software/Data Engineer</h3>
+                <p class="t-org">LIS Nepal Pvt. Ltd, Lalitpur, Nepal</p>
               <ul class="squares">
                 <li>Engineered and maintained production data pipelines for major retail chains, running daily loads of sales and inventory data from diverse source systems through staging and transformation layers into Snowflake.</li>
                 <li>Built the data platform end to end: set up databases, designed warehouse schemas and data marts, and wrote the history-conversion and incremental daily-load processes that kept them current.</li>
@@ -289,27 +328,36 @@
                 <li>Within Dataiku, developed anomaly-detection analysis on retail sales data and delivered it as an interactive application, giving business teams a direct view of irregular sales behavior.</li>
                 <li>Put data-quality controls in place through unit testing and source-to-target reconciliation, so every figure in a report could be traced back to its source system.</li>
               </ul>
+              </div>
             </li>
-            <li class="entry">
-              <p class="entry-line"><strong>Software/Data Engineer Intern</strong>, LIS Nepal Pvt. Ltd, Lalitpur, Nepal, <span class="when">Nov 2021 – Mar 2022</span></p>
+            <li class="t-item" data-kind="work">
+              <div class="t-date">Nov 2021 – Mar 2022</div>
+              <div class="t-body">
+                <h3>Software/Data Engineer Intern</h3>
+                <p class="t-org">LIS Nepal Pvt. Ltd, Lalitpur, Nepal</p>
               <ul class="squares">
                 <li>Built a foundation in enterprise data warehousing, ETL design and business intelligence on retail client projects.</li>
                 <li>Wrote and tuned SQL queries and Snowflake stored procedures, and designed a dynamic materialized view to speed up reporting queries.</li>
                 <li>Carried out the migration of reports and dashboards from Tableau to Power BI, validating each rebuilt report against the original for accuracy.</li>
               </ul>
+              </div>
             </li>
           </ol>
         </section>
 
         <section id="volunteering">
           <h2>Volunteering</h2>
-          <ol class="entries">
-            <li class="entry">
-              <p class="entry-line"><strong>Member</strong>, Women in Big Data, Nepal, <span class="when">Nov 2021 – Jun 2023</span></p>
+          <ol class="timeline">
+            <li class="t-item" data-kind="work">
+              <div class="t-date">Nov 2021 – Jun 2023</div>
+              <div class="t-body">
+                <h3>Member</h3>
+                <p class="t-org">Women in Big Data, Nepal</p>
               <ul class="squares">
                 <li>Ran hands-on workshops on data technologies at colleges.</li>
                 <li>Organized knowledge-sharing sessions and led mentorship programs connecting students with industry experts.</li>
               </ul>
+              </div>
             </li>
           </ol>
         </section>
